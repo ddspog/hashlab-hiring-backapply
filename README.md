@@ -25,7 +25,8 @@ Envie o resultado do seu desafio para dev@hash.com.br (ele pode ser open source!
 * Este serviço recebe um id de produto e um id de usuário e retorna um desconto.
 
 Produto exemplo:
-```
+
+```json
 {
     id: string
     price_in_cents: int
@@ -39,7 +40,8 @@ Produto exemplo:
 ```
 
 Usuário exemplo:
-```
+
+```json
 {
     id: string
     first_name: string
@@ -53,8 +55,8 @@ Usuário exemplo:
   * Se for black friday (nesse exemplo ela pode ser fixada dia 25/11) o produto terá 10% de desconto
   * O desconto não pode passar de 10%
 
-
 ## Serviço 2: Listagem de produtos
+
 * Expõe uma rota HTTP tal que `GET /product` retorne um json com uma
 lista de produtos.
 
