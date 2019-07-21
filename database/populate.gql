@@ -1,0 +1,39 @@
+mutation {
+    insert_Product(objects: [
+        {   description: "The most simple pencil that can be used by anyone at anytime!", 
+            price_in_cents: 100, title: "Simple Pencil A2"  }, 
+        {   description: "Simple and colorful notebook, for drawing to making various notes. Comes with an elastic to mark where you at.", 
+            price_in_cents: 2660, title: "Spiral Notebook Neon (TILIBRA) 96 pgs No-Lines"   }, 
+        {   description: "Simple and delicate Notebook with lines to use on class and further purposes.", 
+            price_in_cents: 3000, title: "University Notebook with Cotton 100 pgs"  }, 
+        {   description: "Simple Notebook with subject division for any student requiring more organization.", 
+            price_in_cents: 2390, title: "University Notebook 300 pgs (15 subj.)"}
+    ],	on_conflict: {
+            constraint: Product_title_key, 
+            update_columns: [description, price_in_cents]
+        }
+    ){
+        returning {
+            id
+            price_in_cents
+            title
+            description
+        }
+    }
+    insert_User(objects: [
+        {   id: "543.004.756-11", first_name: "Dennis", date_of_birth: "1995-06-15", last_name: "Sousa" }, 
+        {   id: "432.888.752-30", first_name: "Black", date_of_birth: "1989-11-25", last_name: "Arry"   }, 
+        {   id: "879.451.123-99", first_name: "Lara", date_of_birth: "1998-03-14", last_name: "Sousa"   }
+    ],	on_conflict: {
+            constraint: User_id_key, 
+            update_columns: [date_of_birth, first_name, last_name]
+        }
+    ){
+        returning {
+            date_of_birth
+            first_name
+            id
+            last_name
+        }
+    }
+}

@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  # Database service
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+    - db_data:/var/lib/postgresql/data
+
+  # Simple service to serve config files
+  serve-config:
+    build: ./database/
+    depends_on:
+      - "postgres"
+    restart: always
+
+  # GraphQL interface
+  graphql-engine:
+    image: ddspog/hasura-graphql-engine
+    ports:
+    - "8080:8080"
+    depends_on:
+    - "serve-config"
+    restart: always
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:@postgres:5432/postgres
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      SCHEMA_FILE: http://serve-config:8080/schema.up.sql
+      METADATA_FILE: http://serve-config:8080/metadata.up.yaml
+      # uncomment next line to set an admin secret
+      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+
+  # Simple service to populate database
+  populate:
+    image: ddspog/graphql-populate
+    depends_on:
+    - "graphql-engine"
+    environment:
+      GQL_CHECK_TABLES: http://serve-config:8080/check-tables.gql
+      GQL_POPULATE_FILE: http://serve-config:8080/populate.gql
+      GRAPHQL_URL: http://graphql-engine:8080/v1/graphql
+volumes:
+  db_data:
