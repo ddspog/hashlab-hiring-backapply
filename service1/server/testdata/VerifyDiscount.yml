@@ -1,0 +1,30 @@
+"that today is %[input.today]q a empty ctx Context, a form VerifyDiscountForm with Iduser %[input.userid]q and a Idprod %[input.prodid]q, with a s Server":
+  - input: {today: "2019-11-25", userid: "432.888.752-30", prodid: "1a184013-d405-4da1-b956-4781e5e4d256"} # Black Friday and Birthday discount
+    golden: {price: 100, bday: "11-25"}
+
+  - input: {today: "2019-11-25", userid: "432.888.752-30", prodid: "84b21225-9be4-4d9c-9bf0-6e5b321e2ca4"}
+    golden: {price: 2660, bday: "11-25"}
+
+  - input: {today: "2019-11-25", userid: "543.004.756-11", prodid: "1a184013-d405-4da1-b956-4781e5e4d256"} # Black Friday discount
+    golden: {price: 100, bday: "06-15"}
+
+  - input: {today: "2019-11-25", userid: "543.004.756-11", prodid: "84b21225-9be4-4d9c-9bf0-6e5b321e2ca4"}
+    golden: {price: 2660, bday: "06-15"}
+
+  - input: {today: "2019-06-15", userid: "543.004.756-11", prodid: "1a184013-d405-4da1-b956-4781e5e4d256"} # Birthday discount
+    golden: {price: 100, bday: "06-15"}
+
+  - input: {today: "2019-03-14", userid: "879.451.123-99", prodid: "84b21225-9be4-4d9c-9bf0-6e5b321e2ca4"}
+    golden: {price: 2660, bday: "03-14"}
+
+  - input: {today: "2019-07-23", userid: "543.004.756-11", prodid: "1a184013-d405-4da1-b956-4781e5e4d256"} # No discount
+    golden: {price: 100, bday: "06-15"}
+
+  - input: {today: "2019-07-23", userid: "879.451.123-99", prodid: "84b21225-9be4-4d9c-9bf0-6e5b321e2ca4"}
+    golden: {price: 2660, bday: "03-14"}
+
+  - input: {today: "2019-07-23", userid: "543.004.756-11", prodid: "1a184013-d405-4da1-b956-4581f5e4d256"} # Can't find product
+    golden: {price: 0, bday: "06-15"}
+
+  - input: {today: "2019-07-23", userid: "879.451.523-99", prodid: "84b21225-9be4-4d9c-9bf0-6e5b321e2ca4"} # Can't find user
+    golden: {price: 2660, bday: ""}
