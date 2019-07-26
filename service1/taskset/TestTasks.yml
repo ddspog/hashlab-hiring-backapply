@@ -1,0 +1,59 @@
+# github.com/go-task/task
+
+version: '2'
+
+vars:
+  REPO_PATH: "github.com/ddspog/hashlab-hiring-backapply/service1"
+
+tasks:
+  gen-queries:
+    desc: Generate the queries filesystem embedded access.
+    dir: ./model/req
+    cmds:
+      - echo "Generating embedded queries ..."
+      - go generate -x
+    sources:
+      - ./model/req/queries/*.gql
+    generates:
+      - ./model/req/queries_vfsdata.gql
+    silent: true
+
+  model-user:
+    deps: [gen-queries]
+    desc: Run model/user tests.
+    cmds:
+      - echo "Calling tests model/user execution ..."
+      - go test {{.REPO_PATH}}/model/user -v --cover
+    silent: true
+
+  model-product:
+    deps: [gen-queries]
+    desc: Run model/product tests.
+    cmds:
+      - echo "Calling tests model/product execution ..."
+      - go test {{.REPO_PATH}}/model/product -v --cover
+    silent: true
+
+  server:
+    deps: [gen-queries]
+    desc: Run server tests.
+    cmds:
+      - echo "Calling tests server execution ..."
+      - go test {{.REPO_PATH}}/server -v --cover
+    silent: true
+
+  today:
+    deps: [gen-queries]
+    desc: Run today tests.
+    cmds:
+      - echo "Calling tests today execution ..."
+      - go test {{.REPO_PATH}}/today -v --cover
+    silent: true
+    
+  all:
+    desc: Run all tests.
+    cmds:
+      - task: model-user
+      - task: model-product
+      - task: server
+      - task: today
