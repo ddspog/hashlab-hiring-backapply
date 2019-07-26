@@ -1,0 +1,18 @@
+"today is %[input.today]q, and we have a testing GraphQLDB on info.TestGraphQLServer":
+  - input: {today: "2019-07-23", id: "879.451.123-99"}
+    golden: {bday: "03-14"}
+
+  - input: {today: "2019-03-14", id: "879.451.123-99"}
+    golden: {bday: "03-14"}
+
+  - input: {today: "2019-07-23", id: "432.888.752-30"}
+    golden: {bday: "11-25"}
+
+  - input: {today: "2019-11-25", id: "432.888.752-30"}
+    golden: {bday: "11-25"}
+
+  - input: {today: "2019-07-23", id: "543.004.756-11"}
+    golden: {bday: "06-15"}
+
+  - input: {today: "2019-06-15", id: "543.004.756-11"}
+    golden: {bday: "06-15"}

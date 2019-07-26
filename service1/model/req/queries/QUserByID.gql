@@ -1,0 +1,5 @@
+query ($userid: String!) {
+    User(where: {id: {_eq: $userid}}) {
+        date_of_birth
+    }
+}

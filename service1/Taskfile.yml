@@ -1,0 +1,25 @@
+# github.com/go-task/task
+
+version: '2'
+
+vars:
+  REPO_PATH: "github.com/ddspog/hashlab-hiring-backapply/service1"
+
+includes:
+  test: ./taskset/TestTasks.yml
+  run: ./taskset/RunTasks.yml
+
+tasks:
+  format:
+    cmds:
+      - echo "Formatting all files on the project ..."
+      - gofmt -e -s -w .
+
+  ensure:
+    desc: Vendor imported packages.
+    cmds:
+      - echo "Vendoring packages ..."
+      - dep ensure
+    silent: true
+
+  

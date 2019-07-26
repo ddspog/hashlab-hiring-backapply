@@ -10,3 +10,10 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Config third-party files
+/.vscode
+codealike.json
+
+# Generated files
+*_vfsdata.go

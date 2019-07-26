@@ -1,0 +1,76 @@
+# github.com/go-task/task
+
+version: '2'
+
+vars:
+  REPO_PATH: "github.com/ddspog/hashlab-hiring-backapply/service1"
+
+tasks:
+  gen-queries:
+    desc: Generate the queries filesystem embedded access.
+    dir: ./model/req
+    cmds:
+      - echo "Generating embedded queries ..."
+      - go generate -x
+    sources:
+      - ./model/req/queries/*.gql
+    generates:
+      - ./model/req/queries_vfsdata.gql
+    silent: true
+
+  build:
+    deps: [gen-queries]
+    desc: Build the go binary in a simple manner.
+    cmds:
+      - echo "Building app binaries ..."
+      - go build -o examples/main-setup/service1{{exeExt}} .
+    sources:
+      - ./**/*.go
+    silent: true
+
+  it:
+    deps: [build]
+    desc: Run the server, for desktop testing purposes.
+    cmds:
+      - ./examples/main-setup/service1 -v
+    silent: true
+    env:
+      SERVICE1_GRAPHQLSRV: https://hash-ddspog-apply-dbhasura.herokuapp.com/v1/graphql
+
+  it-dbday:
+    deps: [build]
+    desc: Run the server, for desktop testing purposes.
+    cmds:
+      - ./examples/main-setup/service1 -v
+    silent: true
+    env:
+      SERVICE1_GRAPHQLSRV: https://hash-ddspog-apply-dbhasura.herokuapp.com/v1/graphql
+      MOCKED_TODAY_DATE: 2019-06-15
+
+  it-lbday:
+    deps: [build]
+    desc: Run the server, for desktop testing purposes.
+    cmds:
+      - ./examples/main-setup/service1 -v
+    silent: true
+    env:
+      SERVICE1_GRAPHQLSRV: https://hash-ddspog-apply-dbhasura.herokuapp.com/v1/graphql
+      MOCKED_TODAY_DATE: 2019-03-14
+
+  it-bfday:
+    deps: [build]
+    desc: Run the server, for desktop testing purposes.
+    cmds:
+      - ./examples/main-setup/service1 -v
+    silent: true
+    env:
+      SERVICE1_GRAPHQLSRV: https://hash-ddspog-apply-dbhasura.herokuapp.com/v1/graphql
+      MOCKED_TODAY_DATE: 2019-11-25
+
+  install:
+    desc: Install the go binary on env path (SERVICE1_SERVER_PATH).
+    cmds:
+      - echo "Installing app binaries ..."
+      - go build -o "{{.SERVICE1_SERVER_PATH}}/service1{{exeExt}}" .
+    silent: true
+

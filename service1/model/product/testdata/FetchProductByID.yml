@@ -1,0 +1,15 @@
+"a testing GraphQLDB on info.TestGraphQLServer":
+  - input: {id: "1a184013-d405-4da1-b956-4781e5e4d256"}
+    golden: {price: 100}
+
+  - input: {id: "84b21225-9be4-4d9c-9bf0-6e5b321e2ca4"}
+    golden: {price: 2660}
+
+  - input: {id: "71bbc322-ffef-47af-8d87-c4bc596900af"}
+    golden: {price: 3000}
+
+  - input: {id: "1cd9ab74-56ba-444e-8666-c00eb9597e69"}
+    golden: {price: 2390}
+
+  - input: {id: "1cd9ab74-56ba-444e-8666-c00eb9597e00"}
+    golden: {price: 0}

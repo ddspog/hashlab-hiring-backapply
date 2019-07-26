@@ -1,0 +1,12 @@
+"a testing GraphQLDB on info.TestGraphQLServer":
+  - input: {id: "879.451.123-99"}
+    golden: {bday: "1998-03-14"}
+
+  - input: {id: "432.888.752-30"}
+    golden: {bday: "1989-11-25"}
+
+  - input: {id: "543.004.756-11"}
+    golden: {bday: "1995-06-15"}
+
+  - input: {id: "543.004.756-10"}
+    golden: {bday: ""}

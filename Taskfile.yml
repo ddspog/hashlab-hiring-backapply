@@ -1,0 +1,19 @@
+# github.com/go-task/task
+
+version: '2'
+
+tasks:
+  compose-up:
+    desc: Compose the services ...
+    cmds:
+      - echo "Composing the Docker images ..."
+      - docker-compose up -d
+    silent: true
+  
+  gen-protoi-golang:
+    desc: Generate Golang interface for gRPC protocols.
+    cmds:
+      - echo "Generating Golang interface for gRPC protocols ..."
+      - cp discount.proto service1/server/protocols
+      - protoc -I service1/server/protocols discount.proto --go_out=plugins=grpc:service1/server/protocols
+      - rm service1/server/protocols/discount.proto

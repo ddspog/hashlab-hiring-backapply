@@ -1,0 +1,4 @@
+"today is %[input.today]q, and we have a testing GraphQLDB on info.TestGraphQLServer":
+  - input: {today: "2019-07-23"}
+
+  - input: {today: "2019-11-25"}
