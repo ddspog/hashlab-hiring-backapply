@@ -1,0 +1,5 @@
+query ($prodid: String!) {
+    Product(where: {id: {_eq: $prodid}}) {
+        price_in_cents
+    }
+}
