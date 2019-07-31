@@ -3,18 +3,6 @@
 version: '2'
 
 tasks:
-  gen-queries:
-    desc: Generate the queries filesystem embedded access.
-    dir: ./model/req
-    cmds:
-      - echo "Generating embedded queries ..."
-      - go generate -x
-    sources:
-      - ./model/req/queries/*.gql
-    generates:
-      - ./model/req/queries_vfsdata.gql
-    silent: true
-
   login:
     desc: Login to Docker Hub.
     cmds:
@@ -22,24 +10,64 @@ tasks:
       - docker login docker.io
     silent: true
 
-  create:
-    deps: [login, gen-queries]
-    desc: Create a Docker image.
+  build:
+    deps: [login]
+    desc: Builds a Docker image.
     cmds:
-      - echo "Create a Docker program image for this service ..."
+      - echo "Building a Docker program image for this service ..."
       - docker build -t {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }} .
     silent: true
     env:
       DOCKER_BUILDKIT: 1
 
   push:
-    deps: [create]
+    deps: [build]
     desc: Push Docker image to Docker Hub repo.
     cmds:
       - echo "Pushing Docker image on repo ..."
       - docker push {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
     silent: true
-  
+
+  pull:
+    desc: Pull Docker image from Docker Hub repo.
+    cmds:
+      - echo "Pulling Docker image from repo ..."
+      - docker pull {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
+    silent: true
+
+  create:
+    desc: Create local Docker container.
+    cmds:
+      - echo "Creating local Docker image ..."
+      - docker create --name hash-service1 {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
+    silent: true
+
+  start:
+    deps: [create]
+    desc: Start local Docker container.
+    cmds:
+      - echo "Starting local Docker image ..."
+      - docker start hash-service1
+    silent: true
+
+  stop:
+    desc: Stops local Docker container.
+    cmds:
+      - echo "Stopping local Docker image ..."
+      - docker stop hash-service1
+    silent: true
+
+  rm:
+    desc: Remove local Docker container.
+    cmds:
+      - echo "Removing local Docker image ..."
+      - cmd: docker kill hash-service1
+        ignore_errors: true
+      - cmd: docker rm hash-service1
+        ignore_errors: true
+    silent: true
+
+
   prune:
     desc: Remove all local Docker images
     cmds:
