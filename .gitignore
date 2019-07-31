@@ -17,3 +17,6 @@ codealike.json
 
 # Generated files
 *_vfsdata.go
+
+# Cache
+**/__pycache__/
