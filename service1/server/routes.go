@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"github.com/ddsgok/log"
 
 	"github.com/ddspog/hashlab-hiring-backapply/service1/model/product"
 	"github.com/ddspog/hashlab-hiring-backapply/service1/server/protocols"
@@ -21,6 +22,8 @@ func New() (s *Server) {
 // specified user. It gives at max 10% if it's Black Friday, and 5%
 // if it's only the user Birthday.
 func (s *Server) VerifyDiscount(ctx context.Context, form *protocols.VerifyDiscountForm) (info *protocols.DiscountInfo, err error) {
+	log.Print("info: - Verifying discount of product '%s' as user '%s'", form.GetProdid(), form.GetUserid())
+	
 	info = &protocols.DiscountInfo{Pct: 0, ValueInCents: 0}
 
 	var p *product.Product

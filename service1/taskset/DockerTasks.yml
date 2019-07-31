@@ -1,0 +1,48 @@
+# https://taskfile.dev
+
+version: '2'
+
+tasks:
+  gen-queries:
+    desc: Generate the queries filesystem embedded access.
+    dir: ./model/req
+    cmds:
+      - echo "Generating embedded queries ..."
+      - go generate -x
+    sources:
+      - ./model/req/queries/*.gql
+    generates:
+      - ./model/req/queries_vfsdata.gql
+    silent: true
+
+  login:
+    desc: Login to Docker Hub.
+    cmds:
+      - echo "Login to Docker Hub ..."
+      - docker login docker.io
+    silent: true
+
+  create:
+    deps: [login, gen-queries]
+    desc: Create a Docker image.
+    cmds:
+      - echo "Create a Docker program image for this service ..."
+      - docker build -t {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }} .
+    silent: true
+    env:
+      DOCKER_BUILDKIT: 1
+
+  push:
+    deps: [create]
+    desc: Push Docker image to Docker Hub repo.
+    cmds:
+      - echo "Pushing Docker image on repo ..."
+      - docker push {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
+    silent: true
+  
+  prune:
+    desc: Remove all local Docker images
+    cmds:
+      - echo "Removing all local Docker images ..."
+      - docker system prune -a --volumes
+    silent: true
