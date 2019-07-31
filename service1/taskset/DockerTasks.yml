@@ -35,20 +35,17 @@ tasks:
       - docker pull {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
     silent: true
 
-  create:
-    desc: Create local Docker container.
-    cmds:
-      - echo "Creating local Docker image ..."
-      - docker create --name hash-service1 {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
-    silent: true
-
   start:
-    deps: [create]
+    deps: [rm]
     desc: Start local Docker container.
     cmds:
       - echo "Starting local Docker image ..."
+      - docker create --name hash-service1 -e SERVICE1_GRAPHQLSRV -p 5001:5001 {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
       - docker start hash-service1
+      #- docker run -d -e --name hash-service1 -p 5001:5001 {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
     silent: true
+    env:
+      SERVICE1_GRAPHQLSRV: https://hash-ddspog-apply-dbhasura.herokuapp.com/v1/graphql
 
   stop:
     desc: Stops local Docker container.
@@ -62,9 +59,9 @@ tasks:
     cmds:
       - echo "Removing local Docker image ..."
       - cmd: docker kill hash-service1
-        ignore_errors: true
+        ignore_error: true
       - cmd: docker rm hash-service1
-        ignore_errors: true
+        ignore_error: true
     silent: true
 
 
