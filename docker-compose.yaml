@@ -16,7 +16,7 @@ services:
 
   # GraphQL interface
   graphql-engine:
-    image: ddspog/hasura-graphql-engine
+    image: ddsdok/hasura-graphql-engine
     ports:
     - "8080:8080"
     depends_on:
@@ -32,12 +32,19 @@ services:
 
   # Simple service to populate database
   populate:
-    image: ddspog/graphql-populate
+    image: ddsdok/graphql-populate
     depends_on:
     - "graphql-engine"
     environment:
       GQL_CHECK_TABLES: http://serve-config:8080/check-tables.gql
       GQL_POPULATE_FILE: http://serve-config:8080/populate.gql
       GRAPHQL_URL: http://graphql-engine:8080/v1/graphql
+
+  service1:
+    image: ddspog/hashlab-hiring-backapply:service1
+    depends_on:
+    - "populate"
+    environment:
+      SERVICE1_GRAPHQLSRV: http://graphql-engine:8080/v1/graphql
 volumes:
   db_data:
