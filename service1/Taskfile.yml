@@ -8,6 +8,8 @@ vars:
 includes:
   test: ./taskset/TestTasks.yml
   run: ./taskset/RunTasks.yml
+  docker: ./taskset/DockerTasks.yml
+  machine: ./taskset/MachineTasks.yml
 
 tasks:
   format:

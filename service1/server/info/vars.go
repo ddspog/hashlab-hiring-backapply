@@ -7,7 +7,7 @@ var (
 	Name = "Service 001"
 
 	// Host of the server.
-	Host = getenv("SERVICE1_HOST", "localhost")
+	Host = getenv("SERVICE1_HOST", "")
 
 	// Port used on the server.
 	Port = getenv("SERVICE1_PORT", "5001")

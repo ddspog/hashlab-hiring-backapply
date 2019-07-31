@@ -1,0 +1,19 @@
+# https://taskfile.dev
+
+version: '2'
+
+tasks:
+  start:
+    desc: Starts a Docker machine to run containers.
+    cmds:
+      - echo "Starting a Docker machine to run containers ..."
+      - docker-machine start
+      - docker-machine env
+    silent: true
+
+  stop:
+    desc: Stop the current Docker machine running.
+    cmds:
+      - echo "Stoping the current Docker machine running ..."
+      - docker-machine stop
+    silent: true

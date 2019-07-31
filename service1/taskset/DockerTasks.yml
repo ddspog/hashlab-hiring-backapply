@@ -1,0 +1,73 @@
+# https://taskfile.dev
+
+version: '2'
+
+tasks:
+  login:
+    desc: Login to Docker Hub.
+    cmds:
+      - echo "Login to Docker Hub ..."
+      - docker login docker.io
+    silent: true
+
+  build:
+    deps: [login]
+    desc: Builds a Docker image.
+    cmds:
+      - echo "Building a Docker program image for this service ..."
+      - docker build -t {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }} .
+    silent: true
+    env:
+      DOCKER_BUILDKIT: 1
+
+  push:
+    deps: [build]
+    desc: Push Docker image to Docker Hub repo.
+    cmds:
+      - echo "Pushing Docker image on repo ..."
+      - docker push {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
+    silent: true
+
+  pull:
+    desc: Pull Docker image from Docker Hub repo.
+    cmds:
+      - echo "Pulling Docker image from repo ..."
+      - docker pull {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
+    silent: true
+
+  start:
+    deps: [rm]
+    desc: Start local Docker container.
+    cmds:
+      - echo "Starting local Docker image ..."
+      - docker create --name hash-service1 -e SERVICE1_GRAPHQLSRV -p 5001:5001 {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
+      - docker start hash-service1
+      #- docker run -d -e --name hash-service1 -p 5001:5001 {{ toSlash "ddspog/hashlab-hiring-backapply:service1" }}
+    silent: true
+    env:
+      SERVICE1_GRAPHQLSRV: https://hash-ddspog-apply-dbhasura.herokuapp.com/v1/graphql
+
+  stop:
+    desc: Stops local Docker container.
+    cmds:
+      - echo "Stopping local Docker image ..."
+      - docker stop hash-service1
+    silent: true
+
+  rm:
+    desc: Remove local Docker container.
+    cmds:
+      - echo "Removing local Docker image ..."
+      - cmd: docker kill hash-service1
+        ignore_error: true
+      - cmd: docker rm hash-service1
+        ignore_error: true
+    silent: true
+
+
+  prune:
+    desc: Remove all local Docker images
+    cmds:
+      - echo "Removing all local Docker images ..."
+      - docker system prune -a --volumes
+    silent: true
