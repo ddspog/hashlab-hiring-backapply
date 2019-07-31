@@ -9,8 +9,8 @@ ENV CGO_ENABLED 0
 ENV GOOS "linux"
 ENV GOARCH=amd64
 
-# Show contents and build
-RUN ls
+# Build
+RUN go generate -x github.com/ddspog/hashlab-hiring-backapply/service1/model/req
 RUN go build -a -installsuffix cgo -ldflags="-w -s" -o /go/bin/service1
 RUN setcap CAP_NET_BIND_SERVICE=+ep /go/bin/service1
 
@@ -28,4 +28,4 @@ WORKDIR /
 EXPOSE 5001
 
 # Execute binary, in Heroku as well
-ENTRYPOINT [ "service1", "-v" ]
+ENTRYPOINT [ "./service1", "-v" ]
