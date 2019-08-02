@@ -1,3 +1,13 @@
+"""Service 2
+
+The script initializes a Flask REST server with only one route: product. 
+This route returns all products listed at database
+
+This module contains the following functions and classes:
+
+    * DiscountClient - client to access gRPC Discount service.
+"""
+
 from cmd import service_cmd
 from db import DBClient
 from grpc_client import DiscountClient
@@ -12,16 +22,15 @@ def list_products():
 
     if product_list != None:
         for i in range(len(product_list)):
-            if 'X-USER-ID' in request.headers:
-                try:
-                    d = app.discount.verify(
-                        request.headers['X-USER-ID'],
-                        product_list[i]['id']
-                    )
-                    product_list[i]['discount'] = d
-                except Exception as err:
-                    app.logger.exception(f'An exception ocurred: {inst}')
-                    pass
+            try:
+                d = app.discount.verify(
+                    request.headers['X-USER-ID'],
+                    product_list[i]['id']
+                )
+                product_list[i]['discount'] = d
+            except Exception as err:
+                app.logger.exception(f'An exception ocurred: {inst}')
+                pass
 
         return {
             "products": product_list,

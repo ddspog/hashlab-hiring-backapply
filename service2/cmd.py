@@ -1,8 +1,24 @@
+"""CMD Module
+
+The CMD Module contains functions needed to process the service as a cli
+application. Its functions defined various needed properties.
+
+This module contains the following functions:
+
+    * service_cmd - returns the parser for the service args.
+"""
+
 import argparse
 from util import envor
 
 
 def service_cmd():
+    """Returns the parser for the service args.
+
+    Returns:
+        argparse.ArgumentParser: A parser for the service args.
+    """
+
     parser = argparse.ArgumentParser(
         prog='service2', 
         description='Service responsible of Service 002 micro service'
