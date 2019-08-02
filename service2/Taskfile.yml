@@ -1,0 +1,19 @@
+# github.com/go-task/task
+
+version: '2'
+
+vars:
+  REPO_PATH: "github.com/ddspog/hashlab-hiring-backapply/service2"
+
+includes:
+  test: ./taskset/TestTasks.yml
+  run: ./taskset/RunTasks.yml
+  docker: ./taskset/DockerTasks.yml
+  machine: ./taskset/MachineTasks.yml
+
+tasks:
+  format:
+    cmds:
+      - echo "Formatting all files on the project ..."
+
+  

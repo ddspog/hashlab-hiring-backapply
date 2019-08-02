@@ -1,0 +1,13 @@
+# github.com/go-task/task
+
+version: '2'
+
+vars:
+  REPO_PATH: "github.com/ddspog/hashlab-hiring-backapply/service1"
+
+tasks:
+  all:
+    desc: Run all tests.
+    cmds:
+      - echo "Running all tests with behave"
+      - behave
