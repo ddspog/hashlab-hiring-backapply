@@ -17,3 +17,10 @@ tasks:
       - cp discount.proto service1/server/protocols
       - protoc -I service1/server/protocols discount.proto --go_out=plugins=grpc:service1/server/protocols
       - rm service1/server/protocols/discount.proto
+
+  gen-protoi-python:
+    desc: Generate Python interface for gRPC protocols.
+    dir: ./service2
+    cmds:
+      - echo "Generating Python interface for gRPC protocols ..."
+      - python -m grpc_tools.protoc -I protocols --python_out=. --grpc_python_out=. ./protocols/discount/*.proto

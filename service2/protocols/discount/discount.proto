@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package protocols;
+
+// Discount will contain ...
+service Discount {
+    rpc VerifyDiscount (VerifyDiscountForm) returns (DiscountInfo) {}
+}
+
+message VerifyDiscountForm {
+    string userid = 1;
+    string prodid = 2;
+}
+
+message DiscountInfo {
+    float pct = 1;
+    int64 value_in_cents = 2;
+}

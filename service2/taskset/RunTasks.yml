@@ -1,0 +1,29 @@
+# github.com/go-task/task
+
+version: '2'
+
+vars:
+  REPO_PATH: "github.com/ddspog/hashlab-hiring-backapply/service1"
+
+tasks:
+  build:
+    desc: Build the go binary in a simple manner.
+    cmds:
+      - echo "Building app binaries ..."
+    silent: true
+
+  it:
+    desc: Run the server, for desktop testing purposes.
+    cmds:
+      - python app.py --debug
+    silent: true
+    env:
+      SERVICE2_GRAPHQLSRV: https://hash-ddspog-apply-dbhasura.herokuapp.com/v1/graphql
+      SERVICE2_DISCOUNTSRV: localhost:5001
+
+  install:
+    desc: Install the go binary on env path (SERVICE1_SERVER_PATH).
+    cmds:
+      - echo "Installing app binaries ..."
+    silent: true
+
