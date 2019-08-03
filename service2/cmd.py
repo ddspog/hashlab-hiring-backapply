@@ -30,7 +30,7 @@ def service_cmd():
                         help='if set, will print debug information')
     parser.add_argument('--port', '-p', metavar='PORT', default=envor('SERVICE2_PORT', '5002'),
                         help='port to load the server')
-    parser.add_argument('--host', metavar='HOST', default=envor('SERVICE2_HOST', ''),
+    parser.add_argument('--host', metavar='HOST', default=envor('SERVICE2_HOST', '0.0.0.0'),
                         help='host to load the server')
     parser.add_argument('--graphql_server', '-g', metavar='SRV', default=envor('SERVICE2_GRAPHQLSRV', 'localhost:8080/v1/graphql'),
                         help='GraphQL engine server to load data')

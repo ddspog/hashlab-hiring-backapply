@@ -9,6 +9,13 @@ tasks:
       - echo "Composing the Docker images ..."
       - docker-compose up -d
     silent: true
+
+  compose-down:
+    desc: Decompose the services ...
+    cmds:
+      - echo "Decomposing the Docker images ..."
+      - docker-compose down
+    silent: true
   
   gen-protoi-golang:
     desc: Generate Golang interface for gRPC protocols.

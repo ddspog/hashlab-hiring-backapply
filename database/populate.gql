@@ -1,12 +1,16 @@
 mutation {
     insert_Product(objects: [
-        {   description: "The most simple pencil that can be used by anyone at anytime!", 
+        {   id: "1a184013-d405-4da1-b956-4781e5e4d256", 
+            description: "The most simple pencil that can be used by anyone at anytime!", 
             price_in_cents: 100, title: "Simple Pencil A2"  }, 
-        {   description: "Simple and colorful notebook, for drawing to making various notes. Comes with an elastic to mark where you at.", 
+        {   id: "84b21225-9be4-4d9c-9bf0-6e5b321e2ca4",
+            description: "Simple and colorful notebook, for drawing to making various notes. Comes with an elastic to mark where you at.", 
             price_in_cents: 2660, title: "Spiral Notebook Neon (TILIBRA) 96 pgs No-Lines"   }, 
-        {   description: "Simple and delicate Notebook with lines to use on class and further purposes.", 
+        {   id: "71bbc322-ffef-47af-8d87-c4bc596900af",
+            description: "Simple and delicate Notebook with lines to use on class and further purposes.", 
             price_in_cents: 3000, title: "University Notebook with Cotton 100 pgs"  }, 
-        {   description: "Simple Notebook with subject division for any student requiring more organization.", 
+        {   id: "1cd9ab74-56ba-444e-8666-c00eb9597e69",
+            description: "Simple Notebook with subject division for any student requiring more organization.", 
             price_in_cents: 2390, title: "University Notebook 300 pgs (15 subj.)"}
     ],	on_conflict: {
             constraint: Product_title_key, 

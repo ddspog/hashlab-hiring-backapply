@@ -40,11 +40,23 @@ services:
       GQL_POPULATE_FILE: http://serve-config:8080/populate.gql
       GRAPHQL_URL: http://graphql-engine:8080/v1/graphql
 
+  # The two main services
   service1:
     image: ddspog/hashlab-hiring-backapply:service1
     depends_on:
     - "populate"
+    ports:
+    - "5001:5001"
     environment:
       SERVICE1_GRAPHQLSRV: http://graphql-engine:8080/v1/graphql
+  service2:
+    image: ddspog/hashlab-hiring-backapply:service2
+    depends_on:
+    - "service1"
+    ports:
+    - "5002:5002"
+    environment:
+      SERVICE2_GRAPHQLSRV: http://graphql-engine:8080/v1/graphql
+      SERVICE2_DISCOUNTSRV: service1:5001
 volumes:
   db_data:

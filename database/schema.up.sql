@@ -1,5 +1,5 @@
 CREATE TABLE public."Product" (
-    id uuid DEFAULT public.gen_random_uuid() NOT NULL,
+    id text NOT NULL,
     price_in_cents integer NOT NULL,
     title text NOT NULL,
     description text NOT NULL
