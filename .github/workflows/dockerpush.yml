@@ -1,0 +1,40 @@
+name: Docker Image CI
+
+on: [release]
+
+jobs:
+
+  build-db-info:
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@master
+    - name: Build Database Info master image on Docker
+      run: docker build ./database --file Dockerfile --tag ddspog/hashlab-hiring-backapply:database
+    - name: Push Database Info master image to Docker Hub
+      run: docker push ddspog/hashlab-hiring-backapply:database
+    
+    - name: Build Database Info versioned image on Docker
+      run: docker build ./database --file Dockerfile --tag ddspog/hashlab-hiring-backapply:$(GITHUB_REF +%s)-database
+    - name: Push Database Info versioned image to Docker Hub
+      run: docker push ddspog/hashlab-hiring-backapply:$(GITHUB_REF +%s)-database
+      
+    - name: Build Service 1 master image on Docker
+      run: docker build ./database --file Dockerfile --tag ddspog/hashlab-hiring-backapply:service1
+    - name: Push Service 1 master image to Docker Hub
+      run: docker push ddspog/hashlab-hiring-backapply:service1
+      
+    - name: Build Service 1 versioned image on Docker
+      run: docker build ./database --file Dockerfile --tag ddspog/hashlab-hiring-backapply:$(GITHUB_REF +%s)-service1
+    - name: Push Service 1 versioned image to Docker Hub
+      run: docker push ddspog/hashlab-hiring-backapply:$(GITHUB_REF +%s)-service1
+      
+    - name: Build Service 2 master image on Docker
+      run: docker build ./database --file Dockerfile --tag ddspog/hashlab-hiring-backapply:service2
+    - name: Push Service 2 master image to Docker Hub
+      run: docker push ddspog/hashlab-hiring-backapply:service2
+    
+    - name: Build Service 2 versioned image on Docker
+      run: docker build ./database --file Dockerfile --tag ddspog/hashlab-hiring-backapply:$(GITHUB_REF +%s)-service2
+    - name: Push Service 2 versioned image to Docker Hub
+      run: docker push ddspog/hashlab-hiring-backapply:$(GITHUB_REF +%s)-service2      
