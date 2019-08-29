@@ -73,7 +73,7 @@ Meu projeto define o código para 3 docker container:
 
 ### Como Executar
 
-Utilizando o `docker-compose`, é possível configurar o database e os dois serviços, de modo que comuniquem entre si, e possam ser acessados por fora.
+Utilizando o `docker-compose`, é possível configurar o database e os dois serviços, de modo que comuniquem entre si, e possam ser acessados externamente.
 
 É só executar:
 
@@ -81,13 +81,13 @@ Utilizando o `docker-compose`, é possível configurar o database e os dois serv
 docker-compose up -d
 ```
 
-Que você pode acessar o serviço 1 por `<docker-machine-ip>:5001` e o serviço 2 em `<docker-machine-ip>:5002`. Para saber qual `<docker-machine-ip>` usar, utilize o comando:
+Que o serviço 1 fica disponível em `<docker-machine-ip>:5001` e o serviço 2 em `<docker-machine-ip>:5002`. Para saber qual `<docker-machine-ip>` usar, utilize o comando:
 
 ```sh
 docker-machine ip
 ```
 
-A partir daí, pode-se testar o serviço 1 por gRPC, utilizando [BloomRPC](https://github.com/uw-labs/bloomrpc) por exemplo. E o serviço 2 via [Postman](https://www.getpostman.com).
+Com os serviços em execução, pode-se testar o serviço 1 por gRPC, utilizando [BloomRPC](https://github.com/uw-labs/bloomrpc) por exemplo. E o serviço 2 via [Postman](https://www.getpostman.com).
 
 Para fins de teste, populei o banco de dados com 4 Produtos e 3 Usuários. Abaixo segue o id dos usuários para testes:
 
@@ -96,6 +96,7 @@ Para fins de teste, populei o banco de dados com 4 Produtos e 3 Usuários. Abaix
  543.004.756-11 | 15/06
  432.888.752-30 | 25/11
  879.451.123-99 | 14/03
+
 E abaixo segue o id dos produtos para testes:
 
  Produto | Preço
@@ -105,13 +106,19 @@ E abaixo segue o id dos produtos para testes:
  71bbc322-ffef-47af-8d87-c4bc596900af | R$ 30,00
  1cd9ab74-56ba-444e-8666-c00eb9597e69 | R$ 26,90
 
- **OBS**: Para poder testar os dois serviços, aconselho configurar a variável `MOCKED_TODAY_DATE` na execução do compose, com uma data desejada no formato `2019-08-07` para o dia 7 de agosto de 2019.
+ **OBS**: Para poder testar os dois serviços, aconselho configurar a variável `MOCKED_TODAY_DATE` na execução do compose, com uma data desejada no formato `2019-08-07` para o dia 7 de agosto de 2019. A execução padrão dos serviços leva em conta o dia atual.
 
  Como esperado, o serviço 1 configura um server gRPC, que segue o protocolo em `discount.proto`. O serviço 2 é um REST server que espera chamadas GET /product, com o id de usuário fornecido no header: `X-USER-ID`.
 
 ### Como o BD funciona
 
-O database é PostgreSQL gerenciado por um motor GraphQL desenvolvido pela [Hasura](https://hasura.io), definidos nos containers `postgres`e `graphql-engine` respectivamente. Na pasta `database` há o arquivo `schema.up.sql` que detalha o Schema das tabelas utilizadas no BD. Utilizo um programa escrito em Golang, no container `populate` para rodar a mutation definida em `database/populate.gql`. Antes disso, o programa verifica se as tabelas já existem com a query `database/check-tables.gql`, e espera serem definidas.
+![](https://raw.githubusercontent.com/ddspog/hashlab-hiring-backapply/master/img/database-setup.png)
+
+Como mostrado na imagem, o database é PostgreSQL gerenciado por um motor GraphQL desenvolvido pela [Hasura](https://hasura.io), definidos nos containers `postgres`e `graphql-engine` respectivamente. 
+
+Na pasta `database` há o arquivo `schema.up.sql` que detalha o Schema das tabelas utilizadas no BD, este arquivo é lido pelo container `graphql-engine` em sua inicialização, para criar o database.
+
+Utilizo um programa escrito em Golang, no container `populate` para rodar a mutation definida em `database/populate.gql`. Antes disso, o programa verifica se as tabelas já existem com a query `database/check-tables.gql`, e espera serem definidas.
 
 Os arquivos necessários para configuração do database são todos disponibilizados pelo container `serve-config` que é um servidor de arquivos estáticos, permitindo o donwload dos arquivos nos outros containers.
 
