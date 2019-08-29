@@ -101,7 +101,7 @@ E abaixo segue o id dos produtos para testes:
  Produto | Preço
  ------- | -----
  1a184013-d405-4da1-b956-4781e5e4d256 | R$ 1,00
- 84b21225-9be4-4d9c-9bf0-6e5b321e2ca4 | R$ 26,60 
+ 84b21225-9be4-4d9c-9bf0-6e5b321e2ca4 | R$ 26,60
  71bbc322-ffef-47af-8d87-c4bc596900af | R$ 30,00
  1cd9ab74-56ba-444e-8666-c00eb9597e69 | R$ 26,90
 
