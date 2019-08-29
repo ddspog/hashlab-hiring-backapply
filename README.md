@@ -65,7 +65,9 @@ lista de produtos.
 
 ## Sobre minha solução
 
-Meu projeto define o código para 3 docker container:
+![](https://raw.githubusercontent.com/ddspog/hashlab-hiring-backapply/master/img/services-comm.png)
+
+Conforme a figura acima, meu projeto faz a comunicação esperada entre os serviços, definindo o código para 3 docker containers nas seguintes pastas:
 
 * **database**: Configura o database definindo o `serve-config` container, que irá disponibilizar arquivos de inicialização do banco de dados utilizado.
 * **service1**: Contém todo o código que compõe o `service1` container, escrito em Golang.
