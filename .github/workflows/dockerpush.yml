@@ -9,6 +9,9 @@ jobs:
  
     steps:
     - uses: actions/checkout@master
+    - uses: actions/docker/login@master
+      secrets: ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
+
     - name: Build Database Info master image on Docker
       run: docker build ./database --file ./database/Dockerfile --tag ddspog/hashlab-hiring-backapply:database
     - name: Push Database Info master image to Docker Hub
