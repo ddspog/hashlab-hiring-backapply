@@ -128,13 +128,29 @@ Essa separação foi feita, para que eu configurasse o BD a partir de duas image
 
 ### Os Serviços
 
+![](https://raw.githubusercontent.com/ddspog/hashlab-hiring-backapply/master/img/service1.png)
+
 No serviço 1, organizei o projeto de acordo com o estilo Golang: utilizar bastante código aberto, e testar bastante o código antes de mandar para produção.
 
-Para isso, separei o projeto em diversos pacotes, e utilizei uma framework especial para usar o programa em CLI. Utilizei o máximo de meu conhecimento possível em Golang, utilizando inclusive, pacotes meus como base. Os testes foram feitos por BDD + TDD + Table-Driven-Tests.
+Para isso, separei o projeto em 4 pacotes, e utilizei a framework [Cobra](https://github.com/spf13/cobra) para usar o programa em CLI. Utilizei o máximo de meu conhecimento possível em Golang, utilizando inclusive, pacotes meus como base. Os testes foram feitos por BDD + TDD + Table-Driven-Tests.
 
-Já no serviço 2, por ser Python, optei pela simplicidade. Ao invés de pacotes, dividi o projeto em poucos arquivos no mesmo nível, apenas encapsulando o código gerado pelo protocolo gRPC em um pacote único. Os testes foram simples, feitos em BDD.
+O pacote **server** é responsável por definir o server gRPC, e seus métodos; além de disponibilizar alguns valores globais para o servidor, como nome, host, port.
 
-Ambos os serviços acessam o database por simples GraphQL queries. A configuração dos métodos gRPC, e seu acesso foi simples tbm. Coloquei a maior parte da lógica no serviço 1, e por isso, dividi o código em diversos subpacotes, para evolução sustentável.
+No pacote **model**, as entidades usuário e produtos são definidas, com métodos para executarem queries para um servidor GraphQL, e então recuperarem informação do Banco de Dados.
+
+Alguns métodos de checagem são definidos no pacote **today**, o qual verifica se a data atual corresponde ao Black Friday, ou a o aniversário do usuário.
+
+A entrada do servidor é definida na pacote **cmd**, que utiliza a framework Cobra para processar argumentos CLI.
+
+![](https://raw.githubusercontent.com/ddspog/hashlab-hiring-backapply/master/img/service2.png)
+
+Já no serviço 2, por ser Python, optei pela simplicidade. Ao invés de pacotes, dividi o projeto em poucos arquivos (módulos) no mesmo nível, apenas encapsulando o código gerado pelo protocolo gRPC em um pacote único. Os testes foram simples, feitos em BDD.
+
+O servidor é iniciado no módulo **app** que usa a framework Flask para configurar o REST server, e a rota GET /product.
+
+O módulo **app** usa os módulos **db** e **grpc_client** para pegar informação de todos os produtos, e possíveis descontos para o usuário atual, respectivamente.
+
+O módulo **grpc_client** utiliza o módulo **discount** que basicamente contém o código gerado pelo protocolo `discount.proto`.
 
 O serviço 2, por ser extremamente simples e curto em linhas, pode evoluir separando para cada módulo um pacote único, dividindo em quantos módulos forem necessários.
 
