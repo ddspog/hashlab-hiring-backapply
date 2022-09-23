@@ -2,5 +2,5 @@ grpcio==1.22.0
 Flask==1.1.1
 behave==1.2.6
 graphqlclient==0.2.4
-protobuf==3.9.0
+protobuf==3.18.3
 grpc==0.3-19
