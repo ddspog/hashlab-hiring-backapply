@@ -1,4 +1,4 @@
-grpcio==1.22.0
+grpcio==1.53.0
 Flask==1.1.1
 behave==1.2.6
 graphqlclient==0.2.4
